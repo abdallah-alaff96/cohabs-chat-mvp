@@ -18,6 +18,8 @@ export default function Page() {
     },
   ]);
   const [input, setInput] = useState("");
+  // TODO: use seLoading
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
@@ -33,6 +35,9 @@ export default function Page() {
                 {msg.content}
               </MessageBubble>
             ))}
+            {loading && (
+              <MessageBubble role="assistant">Thinking…</MessageBubble>
+            )}
           </div>
         </div>
 
