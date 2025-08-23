@@ -2,6 +2,13 @@
 
 A minimal full‑stack chat MVP where users can ask questions about Cohabs and receive simple, rule‑based answers. Unhandled questions trigger a mocked Slack notification and the bot always ends with “Anything else I can help with?”.
 
+## 🎯 Additional Excellent Features
+
+- **Conversation management**: Unique conversation IDs with message persistence
+- **Error handling**: Network errors and malformed requests handled gracefully
+- **TypeScript**: Fully typed implementation
+- **User experience**: Disabled states, loading indicators, proper form validation
+
 ## Tech Stack
 
 - **Next.js 14 (App Router) + TypeScript** — FE + Node API in one project
