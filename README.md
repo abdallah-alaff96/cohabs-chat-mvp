@@ -11,6 +11,19 @@ A minimal full‑stack chat MVP where users can ask questions about Cohabs and r
 - **Rules engine** — regex/keyword matching in `lib/rules.ts`
 - **Mocked Slack notify** — `POST /api/notify-slack` logs payload to server console
 
+### Why Next.js Over React.js?
+
+**Next.js = Full-Stack Simplicity:** Instead of managing separate React frontend + Express/Node backend, Next.js provides both in one unified project. This means:
+
+- **Built-in API Routes** — Create `/api/chat/ask` endpoints directly in your app structure
+- **Zero Backend Setup** — No Express server configuration, CORS handling, or separate deployment
+- **Shared TypeScript** — Same types across frontend and backend code
+- **Single Development Server** — One `yarn dev` command runs everything
+- **Unified Deployment** — Deploy to Vercel/Netlify as one app, not two separate services
+- **App Router Benefits** — Modern routing, layouts, and React Server Components
+
+**For an MVP:** This eliminates the complexity of coordinating two separate codebases and deployments, letting you focus on the actual chat functionality rather than infrastructure setup.
+
 ## Quick Start
 
 **Requirements**: Node 18+ and Yarn
