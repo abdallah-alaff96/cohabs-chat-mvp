@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cohabs Chat — MVP
 
-## Getting Started
+A minimal full‑stack chat MVP where users can ask questions about Cohabs and receive simple, rule‑based answers. Unhandled questions trigger a mocked Slack notification and the bot always ends with “Anything else I can help with?”.
 
-First, run the development server:
+## Tech Stack
+
+- **Next.js 14 (App Router) + TypeScript** — FE + Node API in one project
+- **Tailwind CSS + radix-ui components** — quick, clean UI
+- **In‑memory conversation store** — zero setup
+- **Native fetch** — no axios
+- **Rules engine** — regex/keyword matching in `lib/rules.ts`
+- **Mocked Slack notify** — `POST /api/notify-slack` logs payload to server console
+
+## Quick Start
+
+**Requirements**: Node 18+ and Yarn
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn install     # Install dependencies
+yarn dev         # Start development server
+yarn build       # Build for production
+yarn start       # Start production server
+yarn lint        # Check code quality
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit http://localhost:3000 and start chatting.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### POST `/api/chat/ask`
 
-## Learn More
+**Body**
 
-To learn more about Next.js, take a look at the following resources:
+```json
+{ "message": "string", "conversationId": "optional string" }
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Response**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```json
+{ "conversationId": "string", "reply": "string", "answered": true | false }
+```
 
-## Deploy on Vercel
+- Matches against a small ruleset (payments, bookings, maintenance, house rules, locations, community).
+- If no rule matches, returns a fallback response **and** triggers a mocked Slack notify.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### POST `/api/notify-slack` (mocked)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Body**
+
+```json
+{ "question": "string", "conversationId": "string", "source": "chat-mvp" }
+```
+
+**Response**
+
+```json
+{ "ok": true, "mocked": true }
+```
+
+- Simply logs the payload to the server console. No external calls.
+
+## Storage
+
+- Default is **in‑memory** (no configuration). A new `conversationId` is created on first message.
+- (Optional) You can extend this with SQLite/Prisma, but it's not required for this MVP.
+
+## Notes & Decisions
+
+- Rules‑first for deterministic outputs; small, readable ruleset.
+- AI, auth, persistence, and tests are intentionally **out of scope** for Day 0–1.
+- The bot always appends **"Anything else I can help with?"**
+
+## Known Limitations
+
+- In‑memory storage resets on server restart.
+- No authentication, analytics, or real Slack integration.
+- Minimal accessibility and i18n (good next steps).
