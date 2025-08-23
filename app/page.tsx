@@ -1,7 +1,7 @@
 "use client";
 
 import type { ChangeEvent, KeyboardEvent } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "./components/ui/input";
 import { Button } from "./components/ui/button";
 import { MessageBubble } from "./components/MessageBubble";
@@ -21,6 +21,12 @@ export default function Page() {
   const [conversationId, setConversationId] = useState<string | undefined>(
     undefined
   );
+
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
@@ -93,6 +99,7 @@ export default function Page() {
             {loading && (
               <MessageBubble role="assistant">Thinking…</MessageBubble>
             )}
+            <div ref={bottomRef} />
           </div>
         </div>
 
