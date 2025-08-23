@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, KeyboardEvent } from "react";
 import { useState } from "react";
 import { Input } from "./components/ui/input";
 import { Button } from "./components/ui/button";
@@ -9,7 +9,6 @@ import { MessageBubble } from "./components/MessageBubble";
 type Msg = { role: "user" | "assistant"; content: string };
 
 export default function Page() {
-  // TODO: seMessages to send messages to the backend and get responses
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: "assistant",
@@ -18,11 +17,67 @@ export default function Page() {
     },
   ]);
   const [input, setInput] = useState("");
-  // TODO: use seLoading
   const [loading, setLoading] = useState(false);
+  const [conversationId, setConversationId] = useState<string | undefined>(
+    undefined
+  );
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
+  };
+
+  const sendMessage = async () => {
+    const text = input.trim();
+    if (!text || loading) return;
+
+    setMessages((prev) => [...prev, { role: "user", content: text }]);
+    setInput("");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/chat/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, conversationId }),
+      });
+      const data = await res.json();
+      if (data?.conversationId && data?.conversationId !== conversationId) {
+        setConversationId(data.conversationId);
+      }
+      if (data?.reply) {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: data.reply },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content:
+              "Sorry—something went wrong. Please try again. Anything else I can help with?",
+          },
+        ]);
+      }
+    } catch (e) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content:
+            "Network error—please try again in a moment. Anything else I can help with?",
+        },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
   };
 
   return (
@@ -46,8 +101,12 @@ export default function Page() {
             placeholder="Type your question…"
             value={input}
             onChange={handleInputChange}
+            disabled={loading}
+            onKeyDown={onKeyDown}
           />
-          <Button>Send</Button>
+          <Button onClick={sendMessage} disabled={loading || !input.trim()}>
+            Send
+          </Button>
         </div>
 
         <p className="text-xs text-gray-500">
