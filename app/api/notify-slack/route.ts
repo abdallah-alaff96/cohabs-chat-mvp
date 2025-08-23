@@ -8,9 +8,9 @@ export async function POST(req: Request) {
     // Mocked: log to server console.
     console.log("[MOCK SLACK NOTIFY]", JSON.stringify(payload, null, 2));
     return NextResponse.json({ ok: true, mocked: true });
-  } catch (e: any) {
+  } catch (e: unknown) {
     return NextResponse.json(
-      { ok: false, error: e?.message ?? "unknown" },
+      { ok: false, error: e instanceof Error ? e.message : "unknown" },
       { status: 400 }
     );
   }
