@@ -51,6 +51,35 @@ export async function POST(req: Request) {
     reply = endWithSignature(
       "I couldn’t find an answer to that right now. I’ve notified a teammate to help you directly."
     );
+
+    // Call mocked Slack endpoint (server-to-server)
+    try {
+      const host = (
+        req.headers.get("x-forwarded-host") ||
+        req.headers.get("host") ||
+        ""
+      ).toString();
+      const proto = (req.headers.get("x-forwarded-proto") || "http").toString();
+      const base = host ? `${proto}://${host}` : "";
+      const payload = {
+        question: message,
+        conversationId: convId,
+        source: "chat-mvp",
+      };
+
+      if (base) {
+        await fetch(`${base}/api/notify-slack`, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+      } else {
+        // Fallback: still log locally if base URL isn't available
+        console.log("[MOCK SLACK NOTIFY - LOCAL]", payload);
+      }
+    } catch (err) {
+      console.warn("Notify Slack (mock) failed:", err);
+    }
   }
 
   const assistantMsg: Message = {
