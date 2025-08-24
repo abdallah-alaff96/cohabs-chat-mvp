@@ -4,10 +4,18 @@ A minimal full‑stack chat MVP where users can ask questions about Cohabs and r
 
 ## 📸 Screenshots
 
+### Client Side / FE
+
 | Dark Mode                                          | Light Mode                                           |
 | -------------------------------------------------- | ---------------------------------------------------- |
 | ![Dark Mode Screenshot 1](./screenshots/dark1.png) | ![Light Mode Screenshot 1](./screenshots/light1.png) |
 | ![Dark Mode Screenshot 2](./screenshots/dark2.png) | ![Light Mode Screenshot 2](./screenshots/light2.png) |
+
+### Server Side / BE
+
+| Server logs                                           |
+| ----------------------------------------------------- |
+| ![Server log Screenshot](./screenshots/serverLog.png) |
 
 ## 🎯 Additional Excellent Features
 
