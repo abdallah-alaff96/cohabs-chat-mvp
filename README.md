@@ -1,9 +1,17 @@
 # Cohabs Chat — MVP
 
-A minimal full‑stack chat MVP where users can ask questions about Cohabs and receive simple, rule‑based answers. Unhandled questions trigger a mocked Slack notification and the bot always ends with “Anything else I can help with?”.
+A minimal full‑stack chat MVP where users can ask questions about Cohabs and receive simple, rule‑based answers. Unhandled questions trigger a mocked Slack notification and the bot always ends with "Anything else I can help with?".
+
+## 📸 Screenshots
+
+| Dark Mode                                          | Light Mode                                           |
+| -------------------------------------------------- | ---------------------------------------------------- |
+| ![Dark Mode Screenshot 1](./screenshots/dark1.png) | ![Light Mode Screenshot 1](./screenshots/light1.png) |
+| ![Dark Mode Screenshot 2](./screenshots/dark2.png) | ![Light Mode Screenshot 2](./screenshots/light2.png) |
 
 ## 🎯 Additional Excellent Features
 
+- **Dark mode**: Try switch the ThemeToggle.
 - **Conversation management**: Unique conversation IDs with message persistence
 - **Error handling**: Network errors and malformed requests handled gracefully
 - **TypeScript**: Fully typed implementation
