@@ -17,6 +17,12 @@ A minimal full‑stack chat MVP where users can ask questions about Cohabs and r
 | ----------------------------------------------------- |
 | ![Server log Screenshot](./screenshots/serverLog.png) |
 
+### Docker
+
+| Docker                                         |
+| ---------------------------------------------- |
+| ![Docker Screenshot](./screenshots/docker.png) |
+
 ## 🎯 Additional Excellent Features
 
 - **Dark mode**: Try switch the ThemeToggle.
