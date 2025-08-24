@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 }
 
 body {
-  @apply bg-white text-gray-900;
+  @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
@@ -16,5 +16,5 @@ body {
 }
 
 .card {
-  @apply rounded-2xl border border-gray-200 bg-white shadow-sm;
+  @apply rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900;
 }

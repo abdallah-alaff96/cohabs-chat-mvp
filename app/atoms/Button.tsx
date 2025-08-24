@@ -6,7 +6,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
@@ -21,7 +21,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     );
   }
 );
-// should explicitly set the displayName property on the component after its definition
 Button.displayName = "Button";
-
-export { Button };
