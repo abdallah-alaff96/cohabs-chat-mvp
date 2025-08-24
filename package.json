@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "docker:build": "docker build -t cohabs-chat-mvp .",
+    "docker:run": "docker run -p 3000:3000 --name cohabs-chat-mvp cohabs-chat-mvp",
+    "docker:run:detached": "docker run -d -p 3000:3000 --name cohabs-chat-mvp cohabs-chat-mvp",
+    "docker:stop": "docker stop cohabs-chat-mvp && docker rm cohabs-chat-mvp",
+    "docker:compose:up": "docker compose up --build",
+    "docker:compose:down": "docker compose down",
+    "docker:compose:dev": "docker compose --profile dev up --build"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
