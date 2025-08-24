@@ -2,8 +2,8 @@
 
 import type { ChangeEvent, KeyboardEvent } from "react";
 import { useEffect, useRef, useState } from "react";
-import { Input } from "./components/ui/input";
-import { Button } from "./components/ui/button";
+import { Input } from "./atoms/Input";
+import { Button } from "./atoms/Button";
 import { MessageBubble } from "./components/MessageBubble";
 
 type Msg = { role: "user" | "assistant"; content: string };
